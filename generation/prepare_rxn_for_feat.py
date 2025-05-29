@@ -39,7 +39,7 @@ def make_dummy_data(rxn, need_map=True):
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--input_file', type=str, help='Input file containing reactions rxn')
 argparser.add_argument('--output_file', type=str, default='prepared_rxn_data.pkl', help='Output file containing prepared rxn data')
-argparser.add_argument('--need_map', type=bool, default=True, help='Whether the rxn needs atom mapping, recommended to be True')
+argparser.add_argument('--need_map', type=bool, default=False, help='Whether the rxn needs atom mapping, recommended to be True')
 args = argparser.parse_args()
 
 with open(args.input_file, 'r') as f:

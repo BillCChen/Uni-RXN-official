@@ -10,22 +10,23 @@ import random
 import sys
 from os.path import join
 
+
+from train_module.Pretrain_Graph import Pretrain_Graph
+from yaml import Dumper, Loader
+
 import numpy as np
 import torch
 import tqdm
 import yaml
 from easydict import EasyDict as edict
-from train_module.Pretrain_Graph import Pretrain_Graph
-from yaml import Dumper, Loader
+device = torch.device('cpu')
 
-device = torch.device('cuda' if torch.cuda.is_available( ) else 'cpu')
-#device = torch.device('cpu')
 
 
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--model_dir', type=str, default='ckpt/uni_rxn_base.ckpt', help='path to the pretrained base model checkpoint')
-argparser.add_argument('--input_file', type=str, help='path to the input file for featurization')
+argparser.add_argument('--input_file', type=str, default="/root/retro_synthesis/Uni-RXN-official/example_rxn.pkl",help='path to the input file for featurization')
 argparser.add_argument('--config_path', type=str, default='config/')
 
 args = argparser.parse_args()
@@ -38,8 +39,9 @@ cfg = edict({
     yaml.load(open(join(args.config_path, 'dataset/pretrain.yaml')),
               Loader=Loader),
 })
-
+print('Loading config from {}'.format(args.config_path))
 model = Pretrain_Graph(cfg, stage='inference')
+print('Loading model from {}'.format(args.model_dir))
 model = model.load_from_checkpoint(args.model_dir)
 model = model.to(device)
 model.eval()

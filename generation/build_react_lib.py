@@ -20,7 +20,7 @@ from yaml import Dumper, Loader
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 argparser = argparse.ArgumentParser()
-argparser.add_argument('--model_dir', type=str, default='ckpt/unirxn_gen.ckpt', help='path to the generative model checkpoint')
+argparser.add_argument('--model_dir', type=str, default='ckpt/uni_rxn_gen.ckpt', help='path to the generative model checkpoint')
 argparser.add_argument('--input_file', type=str, default='dataset/data/react_lib_smi.pkl',
                       help='a dictionary file containing your reactant + reagent library, molecules are represented using smiles')
 argparser.add_argument('--config_path', type=str, default='config/')
@@ -42,8 +42,8 @@ model = model.to(device)
 model.eval()
 
 all_smi = pickle.load(open(args.input_file, 'rb'))
-reactant_smi = all_smi['reactant']
-reagent_smi = all_smi['reagent']
+reactant_smi = all_smi['reactant'][:1000]
+reagent_smi = all_smi['reagent'][:1000]
 ouput_lib = []
 
 for d in tqdm.tqdm(reagent_smi):

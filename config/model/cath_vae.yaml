@@ -61,7 +61,7 @@ discriminator:
   z_size: 512
 
 generator:
-  max_n: 29
+  max_n: 128
   set_channels: 512
   latent_dim: 1024
   hidden_dim: 512
